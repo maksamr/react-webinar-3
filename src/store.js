@@ -46,7 +46,8 @@ class Store {
   generateNewCode(arr) {
     let newCode;
     do {
-      newCode = Math.floor((Math.random() * Math.max(...this.codes)) + Math.max(...this.codes) + 1);      
+      //newCode = Math.floor((Math.random() * Math.max(...this.codes)) + Math.max(...this.codes) + 1);      
+      newCode = Math.max(...this.codes) + 1;      
     } while (arr.includes(newCode));
     return newCode;
   }
@@ -60,7 +61,7 @@ class Store {
 
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: newCode, title: 'Новая запись'}]
+      list: [...this.state.list, {code: newCode, title: 'Новая запись', counter: 0}]
     })
   };
 
@@ -85,7 +86,7 @@ class Store {
       list: this.state.list.map(item => {
         if (item.code === code) {
           item.selected = !item.selected;
-          ++item.counter; // увеличиваем счетчик выделений
+          if (item.selected === true) ++item.counter; // увеличиваем счетчик выделений
         }
         else {
           item.selected = false; // скрываем выделение у остальных элементов
